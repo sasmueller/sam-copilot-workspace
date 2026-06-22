@@ -12,6 +12,7 @@ It translates the UI blueprint into concrete frontend requirements:
 - edit behavior
 - accessibility expectations
 - GitHub-native UI expectations
+- Microsoft Teams container expectations
 
 ## Frontend goals
 The frontend must:
@@ -22,6 +23,7 @@ The frontend must:
 - support artifact link management
 - provide a simple portfolio view
 - deliver an accessible and GitHub-native product feel
+- work well inside Microsoft Teams as the primary access surface
 
 ## Visual and interaction requirement
 The Cockpit UI should feel like a **GitHub-native, accessible, calm, and polished internal tool**.
@@ -36,6 +38,16 @@ This means the frontend implementation should emphasize:
 
 This prototype should not prioritize a highly custom branded visual system.
 It should prioritize accessibility, familiarity, and speed of implementation.
+
+## Runtime and access model
+The frontend should be built as a standard web application, but with this usage model:
+- local browser access during development
+- Microsoft Teams as the intended primary user entry point
+- likely future delivery inside Teams as a tab or embedded web experience
+
+### Important implication
+Do not build the first version as a deeply Teams-specific application.
+Build a normal Next.js app, but ensure the layout and interaction model work well inside a Teams container.
 
 ## Recommended frontend architecture
 For the prototype, use:
@@ -74,6 +86,7 @@ Use Primer React as the primary UI system.
 - better internal familiarity for GitHub users
 - accessibility-oriented patterns
 - lower design overhead for a prototype
+- still appropriate when the app is surfaced through Teams
 
 ## Styling guidance
 - prefer Primer primitives and conventions first
@@ -415,7 +428,28 @@ Loading treatments should feel intentional and readable.
 
 ---
 
-## 13. Accessibility and usability guidance
+## 13. Teams container guidance
+
+### Minimum Teams-aware expectations
+The frontend should:
+- work inside narrower container widths than a full desktop browser
+- avoid relying on large full-width layouts only
+- keep important actions visible without excessive scrolling
+- use responsive spacing and card stacking where needed
+- keep headings and tables readable in embedded contexts
+
+### Practical layout guidance
+- prefer section cards that can stack vertically
+- avoid over-wide multi-column layouts for essential workflows
+- keep the engagement detail page readable in a constrained width
+- ensure forms remain usable inside an embedded tab view
+
+### Navigation guidance
+The app should still function as a normal web app, but navigation patterns should remain simple enough to feel comfortable inside Teams.
+
+---
+
+## 14. Accessibility and usability guidance
 
 ### Minimum requirements
 - keyboard navigable forms
@@ -434,7 +468,7 @@ Loading treatments should feel intentional and readable.
 
 ---
 
-## 14. Prototype frontend non-goals
+## 15. Prototype frontend non-goals
 - complex offline behavior
 - advanced role-based personalization
 - deep audit-history UI
@@ -443,6 +477,7 @@ Loading treatments should feel intentional and readable.
 - embedded BVA authoring
 - advanced analytics controls
 - highly custom visual branding system
+- deep Teams-specific custom extension behavior in the first phase
 
 ## Summary
 The prototype frontend should be a thin but effective operating workspace:
@@ -453,3 +488,4 @@ The prototype frontend should be a thin but effective operating workspace:
 - artifact link management
 - lightweight portfolio visibility
 - GitHub-native accessible UI via Primer
+- practical usability inside Microsoft Teams
