@@ -1,13 +1,13 @@
 # Initial Build Sequence
 
 ## Purpose
-This document defines the recommended first build sequence for the Cockpit application.
+This document defines the recommended first build sequence for the Cockpit prototype.
 
 It is optimized for:
 - a non-web-specialist builder
 - low architectural risk
 - fast visible progress
-- preserving premium UI quality from the start
+- zero additional cost during the prototype phase
 
 ## Core principle
 Do not try to build everything at once.
@@ -18,9 +18,8 @@ Build in this order:
 3. backend CRUD
 4. frontend shell
 5. core user workflow
-6. integrations
-7. reporting
-8. polish
+6. refinement
+7. optional future integration
 
 ## Phase 1: Create the project foundation
 
@@ -31,42 +30,38 @@ Build in this order:
 
 ### Tasks
 - initialize Next.js app with TypeScript
-- add Tailwind CSS
-- add shadcn/ui
+- add Primer React
 - set up ESLint/formatting
 - create `.env.example`
-- connect the repo to Vercel
-- create PostgreSQL database
 - install Prisma and initialize schema
+- configure SQLite locally
 
 ### Done when
 - app runs locally
-- app deploys successfully
 - database connection works
+- no external paid services are required
 
-## Phase 2: Establish visual foundation early
+## Phase 2: Establish UI foundation early
 
 ### Goals
-- prevent the UI from becoming a generic CRUD dashboard
-- create a premium visual baseline from day one
+- keep the UI accessible and GitHub-native
+- avoid turning the prototype into a generic CRUD page set
 
 ### Tasks
-- define typography scale
-- define spacing scale
-- define color tokens
-- define radius and shadow tokens
-- define basic page container/layout primitives
-- define button, input, card, badge, table baseline styles
+- define layout patterns
+- define page container primitives
+- define button, input, card, badge, and table baseline usage
 - define loading and empty state baseline
+- define focus and error-state behavior
 
 ### Done when
-- one sample page already feels premium
-- styling decisions are reusable, not ad hoc
+- one sample page already feels clear and GitHub-aligned
+- accessibility basics are visible from the start
 
 ## Phase 3: Implement the database model
 
 ### Goals
-- create the MVP persistence layer
+- create the prototype persistence layer
 
 ### Tasks
 - implement Prisma schema for:
@@ -84,7 +79,7 @@ Build in this order:
 ## Phase 4: Implement the core backend API
 
 ### Goals
-- make the MVP workflow real at the data/API level
+- make the prototype workflow real at the data/API level
 
 ### Tasks
 - implement `GET /api/v1/engagements`
@@ -111,7 +106,7 @@ Build in this order:
 - implement loading, empty, and error states
 
 ### Done when
-- app feels like a product, not just a code demo
+- app feels like an internal product prototype, not just a code demo
 - navigation works across placeholder pages
 
 ## Phase 6: Build the first real workflow
@@ -133,60 +128,50 @@ Build in this order:
 - user can edit key fields
 - user can add/remove artifacts
 
-## Phase 7: Add external context
+## Phase 7: Add lightweight portfolio summary
 
 ### Goals
-- enrich the cockpit without breaking ownership boundaries
-
-### Tasks
-- add Salesforce account context read logic
-- add Salesforce opportunity context read logic
-- add BVA summary read logic
-- populate external refs in engagement detail response
-- show external links in UI
-
-### Done when
-- detail page shows real or mock external context
-- source-of-truth boundaries remain clear
-
-## Phase 8: Add portfolio summary
-
-### Goals
-- provide lightweight leadership visibility
+- provide simple review visibility for yourself
 
 ### Tasks
 - implement portfolio summary backend logic
 - implement portfolio summary API
 - build portfolio page
-- style summary metrics and needs-attention list
 
 ### Done when
-- portfolio page is useful and visually aligned with the rest of the app
+- portfolio page provides a useful summary of active work
 
-## Phase 9: Stabilize and refine
+## Phase 8: Stabilize and refine
 
 ### Goals
-- make the app reliable and pleasant to use repeatedly
+- make the prototype reliable and pleasant to use repeatedly
 
 ### Tasks
 - clean up edge cases
 - improve validation messages
 - improve loading behavior
-- refine visual hierarchy
-- smooth interactions and spacing
-- verify responsiveness
+- refine readability and layout
+- verify keyboard navigation and focus handling
 - test seeded scenarios thoroughly
 
 ### Done when
-- the app feels coherent, reliable, and premium
+- the prototype feels coherent, useful, and accessible
+
+## Optional later phases
+Only after the prototype proves useful:
+- add Salesforce integration
+- add BVA integration
+- migrate SQLite to PostgreSQL
+- add authentication
+- add shared deployment
 
 ## Recommended first technical milestones
 
 ### Milestone 1
-App runs locally and in Vercel.
+App runs locally.
 
 ### Milestone 2
-Prisma schema and migrations work.
+Prisma schema and migrations work with SQLite.
 
 ### Milestone 3
 Engagement CRUD API works.
@@ -198,37 +183,34 @@ Engagement list/detail/create pages work.
 Artifact reference management works.
 
 ### Milestone 6
-External context appears.
-
-### Milestone 7
 Portfolio page works.
 
-### Milestone 8
-Pilot-quality polish achieved.
+### Milestone 7
+Prototype-quality accessibility and polish achieved.
 
 ## Important discipline rules
 
 ### Rule 1
-Do not start with auth, roles, and advanced permissions unless required immediately.
+Do not start with auth, roles, and advanced permissions.
 
 ### Rule 2
-Do not build integrations before the local cockpit workflow works.
+Do not start with external integrations.
 
 ### Rule 3
-Do not delay the visual design system until the end.
+Do not add paid services during the prototype phase.
 
 ### Rule 4
 Do not over-split the architecture early.
 
 ### Rule 5
-Use realistic seeded data early because premium UI quality is hard to judge on empty screens.
+Use realistic seeded data early because usability and accessibility are hard to judge on empty screens.
 
 ## Summary
-The safest and most suitable build sequence for you is:
+The safest and most suitable build sequence for this prototype is:
 - establish the stack
-- establish the visual system
+- establish the UI foundation
 - build the schema
 - build the API
 - build the engagement workflow
-- then add integrations and reporting
-- then polish to premium quality
+- add portfolio summary
+- refine accessibility and usefulness
