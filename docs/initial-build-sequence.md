@@ -1,216 +1,253 @@
 # Initial Build Sequence
 
-## Purpose
-This document defines the recommended first build sequence for the Cockpit prototype.
+## Goal
+This document recommends the most practical order for building the Cockpit prototype.
 
-It is optimized for:
-- a non-web-specialist builder
-- low architectural risk
-- fast visible progress
-- zero additional cost during the prototype phase
+The goal is to:
+- reduce startup complexity
+- get to a usable prototype quickly
+- validate the core workflow before layering on integrations
+- keep development local-first
+- keep the product suitable for Teams-first usage in practice
 
-## Core principle
-Do not try to build everything at once.
+## Recommended build philosophy
+Build the prototype in this order:
+1. make the app run locally
+2. make the core data model work
+3. make one end-to-end workflow work
+4. make the UI readable and useful
+5. validate that the app layout will work well in Microsoft Teams
+6. add more breadth only after the core flow is credible
 
-Build in this order:
-1. foundation
-2. data model
-3. backend CRUD
-4. frontend shell
-5. core user workflow
-6. refinement
-7. optional future integration
+Do not start by optimizing deployment, external integrations, or complex architecture.
 
-## Phase 1: Create the project foundation
+---
 
-### Goals
-- create a runnable app
-- choose the stack once
-- avoid premature complexity
+## Phase 1: App foundation
 
-### Tasks
-- initialize Next.js app with TypeScript
-- add Primer React
-- set up ESLint/formatting
-- create `.env.example`
-- install Prisma and initialize schema
-- configure SQLite locally
+### Objective
+Create a running local application with the minimum structure required to build on safely.
 
-### Done when
-- app runs locally
-- database connection works
-- no external paid services are required
+### Deliverables
+- Next.js app initialized
+- TypeScript configured
+- Primer React installed
+- basic application layout created
+- repository structure established
 
-## Phase 2: Establish UI foundation early
+### Why this first
+This gives you a working shell quickly and avoids overthinking architecture before anything renders.
 
-### Goals
-- keep the UI accessible and GitHub-native
-- avoid turning the prototype into a generic CRUD page set
+### Notes
+At this stage, treat the app as a normal browser-based web app during development.
+Do not block progress on Teams-specific packaging or hosting.
 
-### Tasks
-- define layout patterns
-- define page container primitives
-- define button, input, card, badge, and table baseline usage
-- define loading and empty state baseline
-- define focus and error-state behavior
+---
 
-### Done when
-- one sample page already feels clear and GitHub-aligned
-- accessibility basics are visible from the start
+## Phase 2: Local persistence foundation
 
-## Phase 3: Implement the database model
+### Objective
+Create the simplest useful data layer.
 
-### Goals
-- create the prototype persistence layer
+### Deliverables
+- Prisma installed
+- SQLite configured
+- first Prisma schema created
+- first migration applied
+- Prisma client generated
 
-### Tasks
-- implement Prisma schema for:
-  - engagements
-  - engagementExternalRefs
-  - engagementArtifacts
-- create first migration
-- verify tables locally
-- seed a few realistic records
+### Why this second
+The product revolves around engagement records and related metadata.
+You need a stable persistence layer early.
 
-### Done when
-- local DB contains usable sample data
-- Prisma client can read/write core records
+---
 
-## Phase 4: Implement the core backend API
+## Phase 3: Seed realistic sample data
 
-### Goals
-- make the prototype workflow real at the data/API level
+### Objective
+Avoid building UI against empty screens.
 
-### Tasks
-- implement `GET /api/v1/engagements`
-- implement `GET /api/v1/engagements/{engagementId}`
-- implement `POST /api/v1/engagements`
-- implement `PATCH /api/v1/engagements/{engagementId}`
-- implement artifact create/delete endpoints
-- implement validation and error responses
+### Deliverables
+- seed script added
+- several realistic engagement examples created
+- artifacts and external references seeded
 
-### Done when
-- API can create, list, read, and update engagements
-- artifact linking works
+### Why this third
+The product is much easier to design and validate when it already has believable content.
 
-## Phase 5: Build the frontend shell
+---
 
-### Goals
-- create a navigable app structure
+## Phase 4: Core engagement list workflow
 
-### Tasks
-- implement app layout
-- implement top navigation
-- implement page container patterns
-- implement reusable status badge and card primitives
-- implement loading, empty, and error states
+### Objective
+Get the first useful screen working.
 
-### Done when
-- app feels like an internal product prototype, not just a code demo
-- navigation works across placeholder pages
+### Deliverables
+- `/engagements` page
+- simple engagement table
+- basic status display
+- basic filtering skeleton
+- API route for list retrieval
 
-## Phase 6: Build the first real workflow
+### Why this fourth
+The list page becomes your first proof that the prototype is becoming operational.
 
-### Goals
-- support real user value as early as possible
+---
 
-### Tasks
-- build engagement list page
-- build create engagement page
-- build engagement detail page
-- build artifact add/remove UI
-- wire all pages to the real API
+## Phase 5: Create engagement workflow
 
-### Done when
-- user can create an engagement
-- user can view it in the list
-- user can open the detail page
-- user can edit key fields
-- user can add/remove artifacts
+### Objective
+Make the app capable of producing its own records.
 
-## Phase 7: Add lightweight portfolio summary
+### Deliverables
+- `/engagements/new` page
+- basic create form
+- create API handler
+- redirect to detail page after creation
 
-### Goals
-- provide simple review visibility for yourself
+### Why this fifth
+Once you can create new records, the prototype starts to feel real.
 
-### Tasks
-- implement portfolio summary backend logic
-- implement portfolio summary API
-- build portfolio page
+---
 
-### Done when
-- portfolio page provides a useful summary of active work
+## Phase 6: Engagement detail workflow
 
-## Phase 8: Stabilize and refine
+### Objective
+Create the main operating workspace.
 
-### Goals
-- make the prototype reliable and pleasant to use repeatedly
+### Deliverables
+- `/engagements/[engagementId]` page
+- section-based detail layout
+- editable cockpit-owned fields
+- save behavior per section
+- read-only CRM/BVA context placeholders
 
-### Tasks
-- clean up edge cases
-- improve validation messages
-- improve loading behavior
-- refine readability and layout
-- verify keyboard navigation and focus handling
-- test seeded scenarios thoroughly
+### Why this sixth
+This is where most of the product value lives.
 
-### Done when
-- the prototype feels coherent, useful, and accessible
+---
 
-## Optional later phases
-Only after the prototype proves useful:
-- add Salesforce integration
-- add BVA integration
-- migrate SQLite to PostgreSQL
-- add authentication
-- add shared deployment
+## Phase 7: Artifact management workflow
 
-## Recommended first technical milestones
+### Objective
+Support linked working materials.
 
-### Milestone 1
-App runs locally.
+### Deliverables
+- artifact list display
+- artifact add form
+- artifact removal action
 
-### Milestone 2
-Prisma schema and migrations work with SQLite.
+### Why this seventh
+Artifact linking is useful, but not as foundational as basic engagement CRUD.
 
-### Milestone 3
-Engagement CRUD API works.
+---
 
-### Milestone 4
-Engagement list/detail/create pages work.
+## Phase 8: Teams suitability validation
 
-### Milestone 5
-Artifact reference management works.
+### Objective
+Confirm that the app works well for the intended primary access surface.
 
-### Milestone 6
-Portfolio page works.
+### Deliverables
+- review page layouts at narrower widths
+- confirm important actions remain visible
+- confirm tables remain readable enough
+- confirm cards/forms stack appropriately
+- identify any layout issues that would make Teams usage uncomfortable
 
-### Milestone 7
-Prototype-quality accessibility and polish achieved.
+### Why this eighth
+Teams is the intended daily access surface, but it should influence the app through layout validation rather than by driving premature platform complexity.
 
-## Important discipline rules
+### Important note
+At this stage, the goal is not deep Teams integration.
+The goal is to ensure the app is comfortable to use in a Teams-hosted context.
 
-### Rule 1
-Do not start with auth, roles, and advanced permissions.
+---
 
-### Rule 2
-Do not start with external integrations.
+## Phase 9: Portfolio view
 
-### Rule 3
-Do not add paid services during the prototype phase.
+### Objective
+Add lightweight roll-up visibility.
 
-### Rule 4
-Do not over-split the architecture early.
+### Deliverables
+- `/portfolio` page
+- summary metrics
+- needs attention section
+- counts by type/status
 
-### Rule 5
-Use realistic seeded data early because usability and accessibility are hard to judge on empty screens.
+### Why this ninth
+Portfolio visibility is valuable, but it depends on the core engagement workflow being meaningful first.
+
+---
+
+## Phase 10: External integration refinement
+
+### Objective
+Improve realism after the prototype already works.
+
+### Possible deliverables
+- cleaner Salesforce link handling
+- BVA reference enrichment
+- import/sync helpers
+- stronger view-model shaping for the UI
+
+### Why this later
+External integrations are important, but they should not block the first usable prototype.
+
+---
+
+## What not to build first
+Do **not** start with:
+- authentication
+- deployment automation
+- hosted infrastructure
+- PostgreSQL
+- Power BI embedding
+- Salesforce sync jobs
+- advanced reporting
+- advanced role models
+- deeply custom Teams extensions
+
+These can all come later if the prototype proves valuable.
+
+---
+
+## Recommended implementation sequence summary
+If you want the short version, build in this order:
+
+1. Next.js app shell
+2. Primer setup
+3. Prisma + SQLite
+4. schema + migration
+5. seed data
+6. engagement list page
+7. create page
+8. detail page
+9. artifact management
+10. Teams layout suitability check
+11. portfolio page
+12. later integration refinement
+
+---
+
+## Success criteria for MVP progress
+You are on the right track when:
+- the app runs locally without friction
+- seeded data makes the UI look realistic
+- you can create an engagement
+- you can open the engagement detail page
+- you can edit cockpit-owned fields
+- you can manage artifact references
+- the UI feels clean and readable
+- the layout appears suitable for eventual Teams-based usage
+
+---
 
 ## Summary
-The safest and most suitable build sequence for this prototype is:
-- establish the stack
-- establish the UI foundation
-- build the schema
-- build the API
-- build the engagement workflow
-- add portfolio summary
-- refine accessibility and usefulness
+The best build order is the one that gets you to a credible working flow quickly.
+
+For this prototype, that means:
+- local-first development
+- simple persistence
+- one end-to-end workflow early
+- Teams-aware layout validation
+- integrations and platform complexity later
