@@ -8,6 +8,7 @@ It is written for someone who:
 - wants to avoid unnecessary complexity
 - wants zero additional cost during the prototype phase
 - wants a GitHub-native and accessible UI direction
+- wants Microsoft Teams to be the primary access surface in practice
 
 ## Target prototype stack
 Use:
@@ -16,6 +17,17 @@ Use:
 - Primer React
 - Prisma
 - SQLite
+- Microsoft Teams as the intended primary access surface
+
+## Development and access model
+The recommended model is:
+- develop locally in the browser first
+- build a standard web app at the core
+- treat Microsoft Teams as the intended primary user entry point
+
+This means you should not block yourself on Teams-specific setup before the app works locally.
+First make the app work well in a normal browser.
+Then ensure the layout and flow are suitable for Teams embedding later.
 
 ## What you need before you start
 
@@ -29,6 +41,7 @@ Use:
 ### Recommended
 - terminal access on your machine
 - basic familiarity with running commands in a shell
+- access to Microsoft Teams for later validation of the usage model
 
 ## Step 1: Clone the repository
 Open a terminal and run:
@@ -131,7 +144,7 @@ You are preparing Prisma to generate a local SQLite-backed client.
 ## Step 8: Add the first prototype models
 Add the initial models that match your planning docs:
 - `Engagement`
-- `EngagementExternalRefs`
+- `EngagementExternalRef`
 - `EngagementArtifact`
 
 ### Recommendation
@@ -290,7 +303,18 @@ On `/engagements/[engagementId]`, add:
 Use explicit save actions per section.
 That is easier to understand and debug than autosave.
 
-## Step 21: Add the portfolio page last
+## Step 21: Validate layout assumptions for Teams
+Before considering the prototype structurally sound, verify:
+- the main pages remain readable at narrower widths
+- important actions remain visible
+- cards stack cleanly
+- forms are still comfortable to use in constrained layout space
+
+### Important note
+You do not need full Teams packaging at this point.
+Just ensure the UI will translate well into a Teams-hosted context.
+
+## Step 22: Add the portfolio page last
 The portfolio page can come after the core workflow works.
 
 ### Goal
@@ -307,7 +331,8 @@ Build in this sequence:
 7. create form works
 8. detail page works
 9. artifact handling works
-10. portfolio summary works
+10. Teams container suitability is checked
+11. portfolio summary works
 
 ## Common mistakes to avoid
 
@@ -318,6 +343,7 @@ Build in this sequence:
 - Power BI integration
 - advanced styling systems
 - too many abstractions
+- deep Teams-specific customization before the core workflow works
 
 ### Do start with
 - local setup
@@ -325,6 +351,7 @@ Build in this sequence:
 - one working flow end to end
 - accessible form and table behavior
 - simple, clear UI structure
+- layout choices that can work inside Teams later
 
 ## What success looks like
 A good first success state is:
@@ -334,6 +361,7 @@ A good first success state is:
 - you can see it in a list
 - you can open a detail page
 - the UI already feels clear and GitHub-native
+- the layout looks suitable for eventual Teams-based use
 
 ## Next step after setup
 Once the project skeleton works, the next best document to create would be a:
@@ -343,9 +371,10 @@ Once the project skeleton works, the next best document to create would be a:
 
 ## Summary
 The best way to start this prototype is to keep it:
-- local
+- local during development
 - simple
 - typed
 - accessible
 - GitHub-native
+- Teams-aware
 - focused on one useful workflow first
