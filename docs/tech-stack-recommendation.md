@@ -1,22 +1,22 @@
 # Tech Stack Recommendation
 
 ## Recommendation summary
-For this Cockpit project, the recommended stack is:
+For this Cockpit prototype, the recommended stack is:
 
 - **Framework:** Next.js
 - **Language:** TypeScript
-- **Styling:** Tailwind CSS
-- **UI components:** shadcn/ui
+- **UI system:** Primer React
 - **ORM:** Prisma
-- **Database:** PostgreSQL
-- **Deployment:** Vercel
-- **Authentication:** defer until core workflows are working
+- **Database:** SQLite
+- **Deployment:** local-first during prototype phase
+- **Authentication:** defer until a broader rollout is approved
 
 This is the best balance of:
+- zero additional cost
 - implementation speed
 - maintainability
-- modern product quality
-- premium UI capability
+- accessibility
+- GitHub-native UI fit
 - suitability for a developer who is not a web frontend specialist
 
 ## Why this stack is the best fit
@@ -25,12 +25,11 @@ This is the best balance of:
 Next.js gives you:
 - routing
 - layouts
-- server-side rendering if needed
+- server-side rendering if needed later
 - API routes / server actions
 - strong ecosystem support
-- straightforward Vercel deployment
 
-For a solo or small-team builder, it reduces the number of architecture decisions.
+For a solo builder, it reduces the number of architectural decisions.
 
 ### 2. TypeScript
 TypeScript helps prevent avoidable mistakes across:
@@ -39,104 +38,84 @@ TypeScript helps prevent avoidable mistakes across:
 - backend logic
 - database interaction
 
-Because your app has multiple entities and integration boundaries, types will help a lot.
+Because the app has multiple entities and integration boundaries, types will help a lot.
 
-### 3. Tailwind CSS
-Tailwind is a strong fit because:
-- it is fast to build with
-- it gives precise control over spacing and typography
-- it supports premium UI implementation well
-- it avoids heavy CSS architecture upfront
+### 3. Primer React
+Primer React is recommended because:
+- it aligns with GitHub’s design language
+- it supports accessible, familiar internal UI patterns
+- it reduces UI design decision overhead
+- it is a better fit for internal GitHub users than a heavily custom visual system
 
-It is especially useful for achieving the Apple-like visual quality you want.
+This is the best choice for an internal GitHub-oriented prototype.
 
-### 4. shadcn/ui
-shadcn/ui is recommended because:
-- it provides polished starting components
-- the components are editable in your codebase
-- it avoids locking you into a rigid component framework
-- it fits premium modern product UI very well
-
-This is much better for your goal than using a generic enterprise component library.
-
-### 5. Prisma
+### 4. Prisma
 Prisma is recommended because:
 - it is approachable
 - it makes schema and migrations manageable
 - it gives typed database queries
-- it reduces SQL complexity for day-to-day work
+- it reduces day-to-day persistence complexity
+- it supports a future migration from SQLite to PostgreSQL if needed
 
-For your relational MVP data model, Prisma is an excellent fit.
-
-### 6. PostgreSQL
-PostgreSQL is recommended because:
-- it is reliable
-- it is standard
-- it fits your relational schema naturally
-- it scales far beyond MVP needs
-
-### 7. Vercel
-Vercel is recommended because:
-- it is the easiest deployment target for Next.js
-- preview deployments are easy
-- environment variable handling is straightforward
-- it reduces infrastructure burden significantly
+### 5. SQLite
+SQLite is recommended for the prototype because:
+- it has zero infrastructure cost
+- it requires no external database account
+- it is easy to set up locally
+- it is suitable for a mostly single-user prototype
 
 ## Why not other options
 
-### Plain React + separate backend
-This would create more setup and more moving pieces.
-It is not the best choice for you.
+### Managed hosting during prototype
+Avoid introducing Vercel or other external platforms during the prototype unless you later need shared access.
 
-### Angular
-Too heavy for this MVP and less aligned with fast premium product building.
+### Managed PostgreSQL during prototype
+A managed Postgres database is not necessary for a primarily single-user prototype.
+It adds setup and possible cost too early.
 
-### Vue/Nuxt
-A valid option, but Next.js currently provides a better ecosystem fit for your likely needs.
+### Highly custom UI stack
+Avoid starting with a highly custom Tailwind/shadcn-based design system for this use case.
+The internal GitHub prototype should prioritize familiarity and accessibility over custom branding.
 
-### Traditional enterprise stacks first
-Java/.NET backend-first architectures are powerful, but they add unnecessary weight for this MVP unless your environment requires them.
-
-## Recommended version of the architecture
+## Recommended architecture
 
 ## App responsibilities
 Use one Next.js app for:
 - pages/routes
 - server-side API handlers
 - UI rendering
-- backend orchestration for MVP
+- MVP orchestration
 
 ## Data responsibilities
-Use PostgreSQL + Prisma for:
+Use SQLite + Prisma for:
 - engagement persistence
 - artifact persistence
 - external reference persistence
 
 ## Integration responsibilities
 Use server-side service modules for:
-- Salesforce read adapters
-- BVA read adapters
-- sync/update jobs later
-
-## Reporting responsibilities
-Use Power BI as a reporting consumer, not as the operational app surface.
+- future Salesforce read adapters
+- future BVA read adapters
+- future sync/update jobs if needed
 
 ## Decision guidance
 If you want one simple answer:
 
-**Choose Next.js + TypeScript + Tailwind + shadcn/ui + Prisma + PostgreSQL + Vercel.**
+**Choose Next.js + TypeScript + Primer React + Prisma + SQLite.**
 
-## Suggested future add-ons
-Not required on day one, but good candidates later:
-- authentication provider
-- background job runner
-- audit event tracking
-- monitoring/observability tooling
-- component documentation/storybook-style setup if the UI grows
+## Future migration path
+If the prototype gets management support and funding, the likely next migration would be:
+- keep Next.js
+- keep TypeScript
+- keep Primer React
+- keep Prisma
+- switch SQLite to PostgreSQL
+- add shared hosting and authentication
 
 ## Summary
 This stack gives you the best combination of:
-- modern development ergonomics
+- no extra cost
 - low setup friction
-- premium UI potential
-- strong long-term maintainability
+- accessible internal UI
+- strong maintainability
+- future upgrade path without wasted prototype work
