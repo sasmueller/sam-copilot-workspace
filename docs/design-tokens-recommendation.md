@@ -1,17 +1,22 @@
 # Design Tokens Recommendation
 
 ## Purpose
-This document defines a practical starting point for the Cockpit design token system.
+This document defines a practical starting point for the Cockpit prototype design system.
 
-It is intended to help implement the premium Apple-like design direction in a repeatable way.
+It is intended to help implement a GitHub-native and accessible UI in a repeatable way.
 
 ## Goal
 Create a UI that feels:
-- modern
+- clear
+- accessible
 - calm
-- premium
-- precise
+- familiar to GitHub users
 - consistent
+
+## Primary direction
+This prototype should use **Primer React and Primer design foundations first**.
+
+Design tokens and additional styling should support that direction rather than replace it.
 
 ## Token categories
 The initial token system should include:
@@ -19,47 +24,34 @@ The initial token system should include:
 - typography
 - spacing
 - radius
-- shadow
-- motion
+- border and surface treatment
+- focus treatment
 - layout widths
 
 ## Color direction
-Use a neutral-first palette.
-
-### Recommended palette structure
-- background
-- foreground
-- muted
-- card
-- border
-- primary
-- success
-- warning
-- danger
+Use a restrained, accessible palette aligned with GitHub-native usage.
 
 ### Guidance
-- keep saturation restrained
-- rely heavily on neutrals
-- use accent colors sparingly
-- keep status colors refined, not loud
+- use semantic colors carefully
+- prioritize contrast and readability
+- avoid decorative saturation
+- ensure status colors remain distinguishable and accessible
 
 ## Typography direction
-Use a crisp modern sans-serif stack.
+Use readable, familiar typography with clear hierarchy.
 
 ### Recommended token groups
-- display
-- h1
-- h2
-- h3
+- page title
+- section title
 - body
 - body-small
 - label
 - caption
 
 ### Guidance
-- use stronger hierarchy through size and weight, not excessive color
-- prioritize readability
-- avoid tiny text as a default
+- prioritize clarity over stylistic distinctiveness
+- avoid overly small text
+- maintain strong content hierarchy
 
 ## Spacing direction
 Use a clean spacing scale.
@@ -74,78 +66,58 @@ Use a clean spacing scale.
 - 32
 - 40
 - 48
-- 64
 
 ### Guidance
-- prefer generous spacing between sections
-- avoid cramped card internals
-- use consistent rhythm across pages
+- preserve readable separation between sections
+- avoid cramped forms and cards
+- keep spacing consistent across pages
 
 ## Radius direction
-Use softer modern radii.
-
-### Suggested levels
-- small
-- medium
-- large
-- extra-large
+Use moderate radii consistent with Primer-like patterns.
 
 ### Guidance
-- avoid sharp enterprise boxes
-- keep radius consistent across cards, inputs, and buttons
+- do not over-round surfaces
+- keep radius use restrained and consistent
 
-## Shadow direction
-Use subtle elevation.
-
-### Suggested levels
-- none
-- low
-- medium
-- high
+## Border and surface direction
+Use simple structure with low visual noise.
 
 ### Guidance
-- keep shadows soft
-- use them to suggest depth, not decoration
+- use borders only where they improve clarity
+- prefer clean section grouping
+- avoid heavy boxed enterprise styling
 
-## Motion direction
-Use restrained motion tokens.
-
-### Suggested timing levels
-- fast
-- normal
-- slow
-
-### Suggested easing
-- standard ease-out for hover/open
-- smooth ease-in-out for transitions
+## Focus treatment
+Focus behavior is a first-class requirement.
 
 ### Guidance
-- motion should support polish, not become noticeable for its own sake
+- all interactive elements must have visible focus states
+- focus styling should be clear and accessible
+- keyboard navigation should be easy to track visually
 
 ## Layout width direction
 Define consistent content widths.
 
 ### Suggested widths
-- narrow
 - standard
 - wide
 - full
 
 ### Guidance
-- use a standard content width for most pages
-- use wide layouts for data-heavy list views
+- use standard widths for forms and detail pages
+- use wider layouts for tables and portfolio views
 
 ## MVP implementation advice
-Implement tokens in the simplest maintainable way available in your stack.
+Implement tokens in the simplest maintainable way available in the chosen stack.
 
-For example:
-- CSS variables for semantic colors
-- Tailwind theme extension for spacing, radius, shadows, and typography
-- reusable layout/container classes
+For this prototype:
+- use Primer defaults first
+- add a thin layer of local token decisions only where needed
+- do not build a large custom design token system prematurely
 
 ## Summary
-A small, disciplined token system will help you achieve:
-- premium consistency
-- faster UI decisions
-- less visual drift
-- easier future refinement
+A small, disciplined token layer should help achieve:
+- GitHub-native consistency
+- accessibility
+- lower design risk
+- easier future refinement if the prototype becomes a funded product
