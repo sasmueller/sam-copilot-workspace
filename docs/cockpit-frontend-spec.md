@@ -1,7 +1,7 @@
 # Cockpit Frontend Spec
 
 ## Purpose
-This document defines the MVP frontend implementation spec for the Sales Cockpit web application.
+This document defines the MVP frontend implementation spec for the Sales Cockpit prototype.
 
 It translates the UI blueprint into concrete frontend requirements:
 - routes
@@ -10,7 +10,8 @@ It translates the UI blueprint into concrete frontend requirements:
 - state behavior
 - data-fetching needs
 - edit behavior
-- visual system expectations
+- accessibility expectations
+- GitHub-native UI expectations
 
 ## Frontend goals
 The frontend must:
@@ -20,32 +21,30 @@ The frontend must:
 - present cross-system context in one place
 - support artifact link management
 - provide a simple portfolio view
-- deliver a premium state-of-the-art product feel
+- deliver an accessible and GitHub-native product feel
 
 ## Visual and interaction requirement
-The Cockpit UI should feel like a **modern premium web product with Apple-like clarity and polish**.
+The Cockpit UI should feel like a **GitHub-native, accessible, calm, and polished internal tool**.
 
 This means the frontend implementation should emphasize:
-- elegant typography
-- generous spacing
-- restrained color use
-- subtle elevation and depth
-- calm layouts
-- smooth motion and transitions
-- high-quality empty/loading/error states
-- premium responsiveness across screen sizes
+- clarity over novelty
+- strong readability
+- familiar GitHub-aligned interaction patterns
+- accessible form and table behavior
+- restrained visual styling
+- polished loading/empty/error states
 
-This does not mean imitating Apple branding directly.
-It means implementing a high-craft product experience.
+This prototype should not prioritize a highly custom branded visual system.
+It should prioritize accessibility, familiarity, and speed of implementation.
 
 ## Recommended frontend architecture
-For MVP, use:
-- component-based SPA or hybrid app
+For the prototype, use:
+- component-based Next.js app
 - route-driven page model
 - API-backed state
 - minimal client-side business logic
 - server-owned canonical validation
-- token-driven styling system
+- Primer-based UI components where possible
 
 ### Recommendation
 Keep the frontend thin:
@@ -63,59 +62,24 @@ Keep the frontend thin:
 - `/engagements/:engagementId`
 - `/portfolio`
 
-### Optional future routes
-- `/settings`
-- `/reports`
-- `/artifacts/:artifactId`
-
 ---
 
-## 2. Design token guidance
+## 2. Design system guidance
 
-## Required token categories
-The frontend should define a design-token layer for:
-- color
-- typography
-- spacing
-- radius
-- shadow/elevation
-- motion
-- layout widths
+## Primary UI system
+Use Primer React as the primary UI system.
 
-## Typography guidance
-Typography should feel modern, crisp, and premium.
+### Why
+- GitHub-native visual language
+- better internal familiarity for GitHub users
+- accessibility-oriented patterns
+- lower design overhead for a prototype
 
-Suggested approach:
-- clear display size for page headers
-- strong section-title hierarchy
-- highly readable body text
-- restrained label and meta text styling
-
-## Spacing guidance
-Use a consistent spacing scale and avoid cramped layouts.
-
-The UI should feel breathable and deliberate.
-
-## Radius and elevation guidance
-Use:
-- soft modern border radii
-- subtle shadows
-- minimal borders where possible
-- layered surfaces rather than harsh boxes
-
-## Motion guidance
-Motion should be:
-- subtle
-- fast
-- intentional
-- non-distracting
-
-Recommended motion uses:
-- page transitions
-- section reveal
-- hover states
-- save feedback
-- table row hover/focus
+## Styling guidance
+- prefer Primer primitives and conventions first
+- add only limited custom styling where needed
+- keep the UI clean, calm, and readable
+- avoid a visually dense admin-dashboard feel
 
 ---
 
@@ -144,7 +108,7 @@ Route:
 If no engagements exist:
 - show a clear empty state
 - include CTA to create engagement
-- ensure the empty state feels intentional and polished, not placeholder-like
+- ensure the empty state feels intentional and readable
 
 ## Create engagement page
 Route:
@@ -185,18 +149,9 @@ Route:
 API:
 - `GET /api/v1/engagements`
 
-### Data needed
-- list items
-- pagination metadata
-- filter-compatible fields
-
 ## Create engagement page
 API:
 - `POST /api/v1/engagements`
-
-### Supporting data
-If selectors need remote data later, add lookup endpoints.
-For MVP this can start with simple account/opportunity resolution patterns as available.
 
 ## Engagement detail page
 API:
@@ -249,12 +204,11 @@ Controls:
 - last updated
 
 ### Visual guidance for the table
-The table should feel lightweight and premium:
-- minimal grid noise
-- strong row spacing
-- subtle hover treatment
-- crisp typography
-- status badges that do not overwhelm content
+The table should prioritize:
+- readability
+- keyboard usability
+- clear row focus/hover states
+- restrained status indication
 
 ## Engagement detail page layout
 Sections:
@@ -272,12 +226,12 @@ Sections:
 - open BVA source if present
 
 ### Visual guidance for detail page
-The page should feel like a premium workspace:
-- strong typographic hierarchy
-- generous vertical rhythm
-- card grouping with subtle separation
-- uncluttered action areas
-- editable areas that are obvious but not visually heavy
+The page should feel:
+- clear
+- structured
+- familiar
+- accessible
+- lightweight but professional
 
 ## Portfolio page layout
 Sections:
@@ -311,24 +265,8 @@ Sections:
 - `ErrorState`
 - `MetricCard`
 
-## Suggested table row behavior
-Clicking a row opens the engagement detail page.
-
-## Suggested status badge behavior
-Use consistent color mapping for:
-- engagement status
-- BVA status
-- MEDDPICC status
-- exec prep status
-
-## Component style guidance
-Components should be:
-- quiet by default
-- polished on interaction
-- consistent in spacing and radius
-- visually unified across pages
-
-Avoid a generic admin-dashboard aesthetic.
+## Component guidance
+Prefer implementing these with Primer-compatible patterns and primitives where practical.
 
 ---
 
@@ -354,6 +292,7 @@ Avoid a generic admin-dashboard aesthetic.
 - required fields validated client-side for usability
 - server remains source of truth for validation
 - show inline field errors where possible
+- ensure validation messaging is accessible
 
 ## Edit behavior on detail page
 Editable fields:
@@ -370,11 +309,6 @@ Editable fields:
 - exec prep status
 - exec event type
 - exec event date
-
-### Save model recommendation
-Use one of:
-- explicit Save button per section
-- autosave with debounce
 
 ### Recommended MVP choice
 Use **explicit Save per section** for simplicity and clarity.
@@ -445,8 +379,7 @@ Use for:
 - portfolio summary
 
 ### Recommendation
-Use a lightweight query/state library or framework-native data layer.
-Avoid overengineering state management for MVP.
+Use a lightweight data-fetching pattern and avoid overengineering state management for the prototype.
 
 ---
 
@@ -463,7 +396,7 @@ Avoid overengineering state management for MVP.
 - show actionable error messages
 - preserve unsaved user input where possible
 - allow retry actions
-- error states should still feel designed and calm, not abrupt or raw
+- ensure error feedback is accessible and calm
 
 ---
 
@@ -477,8 +410,8 @@ Avoid overengineering state management for MVP.
 - artifact mutation loading
 
 ### UX guidance
-Prefer skeletons or lightweight section loaders over blocking the whole page when possible.
-Loading treatments should feel refined and intentional.
+Prefer non-blocking section-level loading where practical.
+Loading treatments should feel intentional and readable.
 
 ---
 
@@ -491,6 +424,7 @@ Loading treatments should feel refined and intentional.
 - semantic table or list markup
 - adequate badge contrast
 - error text associated with fields
+- visible focus states
 
 ### Usability guidance
 - keep editing fast
@@ -500,7 +434,7 @@ Loading treatments should feel refined and intentional.
 
 ---
 
-## 14. MVP frontend non-goals
+## 14. Prototype frontend non-goals
 - complex offline behavior
 - advanced role-based personalization
 - deep audit-history UI
@@ -508,13 +442,14 @@ Loading treatments should feel refined and intentional.
 - embedded Power BI authoring
 - embedded BVA authoring
 - advanced analytics controls
+- highly custom visual branding system
 
 ## Summary
-The MVP frontend should be a thin but effective operating workspace:
+The prototype frontend should be a thin but effective operating workspace:
 - clear routes
 - simple forms
 - normalized API consumption
 - section-based engagement detail
 - artifact link management
 - lightweight portfolio visibility
-- premium, state-of-the-art visual and interaction quality
+- GitHub-native accessible UI via Primer
