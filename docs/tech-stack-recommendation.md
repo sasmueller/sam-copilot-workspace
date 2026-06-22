@@ -8,7 +8,8 @@ For this Cockpit prototype, the recommended stack is:
 - **UI system:** Primer React
 - **ORM:** Prisma
 - **Database:** SQLite
-- **Deployment:** local-first during prototype phase
+- **Development mode:** local-first during prototype phase
+- **Primary access surface:** Microsoft Teams
 - **Authentication:** defer until a broader rollout is approved
 
 This is the best balance of:
@@ -18,6 +19,7 @@ This is the best balance of:
 - accessibility
 - GitHub-native UI fit
 - suitability for a developer who is not a web frontend specialist
+- alignment with the user’s actual working environment in Teams
 
 ## Why this stack is the best fit
 
@@ -45,9 +47,9 @@ Primer React is recommended because:
 - it aligns with GitHub’s design language
 - it supports accessible, familiar internal UI patterns
 - it reduces UI design decision overhead
-- it is a better fit for internal GitHub users than a heavily custom visual system
+- it is a good fit for an internal GitHub-oriented prototype even when accessed through Teams
 
-This is the best choice for an internal GitHub-oriented prototype.
+This remains the best choice for the product UI layer.
 
 ### 4. Prisma
 Prisma is recommended because:
@@ -64,7 +66,21 @@ SQLite is recommended for the prototype because:
 - it is easy to set up locally
 - it is suitable for a mostly single-user prototype
 
+### 6. Microsoft Teams as the primary access surface
+Teams should be treated as the intended primary access point because:
+- it is already part of the user’s daily workflow
+- it lowers friction for regular usage
+- it increases the likelihood of real prototype adoption
+- it fits the available Microsoft tool environment at no extra cost
+
+This does **not** mean the first implementation should be deeply Teams-specific.
+It means the app should be built as a normal web app with Teams as the intended container and entry point.
+
 ## Why not other options
+
+### Browser-only positioning
+Avoid framing the prototype as browser-only if the real user workflow is Teams-first.
+The browser remains the easiest development environment, but not the best long-term access framing for this use case.
 
 ### Managed hosting during prototype
 Avoid introducing Vercel or other external platforms during the prototype unless you later need shared access.
@@ -75,7 +91,7 @@ It adds setup and possible cost too early.
 
 ### Highly custom UI stack
 Avoid starting with a highly custom Tailwind/shadcn-based design system for this use case.
-The internal GitHub prototype should prioritize familiarity and accessibility over custom branding.
+The internal prototype should prioritize familiarity and accessibility over custom branding.
 
 ## Recommended architecture
 
@@ -98,10 +114,15 @@ Use server-side service modules for:
 - future BVA read adapters
 - future sync/update jobs if needed
 
+## Access responsibilities
+Use the app in two modes:
+- direct browser access during development
+- intended Microsoft Teams access as the primary user-facing shell
+
 ## Decision guidance
 If you want one simple answer:
 
-**Choose Next.js + TypeScript + Primer React + Prisma + SQLite.**
+**Choose Next.js + TypeScript + Primer React + Prisma + SQLite, and plan for Microsoft Teams as the primary access surface.**
 
 ## Future migration path
 If the prototype gets management support and funding, the likely next migration would be:
@@ -110,7 +131,9 @@ If the prototype gets management support and funding, the likely next migration 
 - keep Primer React
 - keep Prisma
 - switch SQLite to PostgreSQL
-- add shared hosting and authentication
+- add hosting suitable for Teams access
+- add authentication / Microsoft identity if needed
+- register or package the app appropriately for Teams delivery
 
 ## Summary
 This stack gives you the best combination of:
@@ -118,4 +141,5 @@ This stack gives you the best combination of:
 - low setup friction
 - accessible internal UI
 - strong maintainability
+- strong fit with the user’s daily Teams workflow
 - future upgrade path without wasted prototype work
