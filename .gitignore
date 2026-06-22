@@ -1,0 +1,9 @@
+# Ignore OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Ignore Python cache just in case
+__pycache__/
+*.pyc
