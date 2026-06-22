@@ -25,6 +25,19 @@ Instead, the UI should:
 - allow direct editing of cockpit-owned workflow fields
 - link users into source systems and artifacts when deeper work is needed
 
+## Visual design direction
+The Cockpit should feel like a **state-of-the-art premium web product**, not a generic internal tool.
+
+The intended direction is:
+- Apple-like in clarity, restraint, polish, and visual confidence
+- modern, calm, and content-first
+- elegant rather than busy
+- premium without being ornamental
+- highly usable for enterprise workflows
+
+This does **not** mean copying Apple branding.
+It means applying high-end product design principles to the cockpit experience.
+
 ## MVP UI goals
 The UI must enable users to:
 1. create an engagement
@@ -61,6 +74,29 @@ Needs to:
 - review portfolio health
 - identify high-priority or at-risk engagements
 - inspect executive-readiness patterns
+
+## Experience principles
+
+### Principle 1: clarity over density
+The interface should prioritize readability, hierarchy, and focus over maximum information density.
+
+### Principle 2: premium restraint
+Use fewer UI elements, but make them better designed and more intentional.
+
+### Principle 3: summary first
+Show essential status and next-step information before deeper detail.
+
+### Principle 4: cross-system clarity
+If a field is sourced from Salesforce or the BVA app, make that visible in the UI.
+
+### Principle 5: link out, do not duplicate
+If deep work belongs elsewhere, provide a clear link instead of rebuilding the whole tool.
+
+### Principle 6: low-friction updates
+The engagement owner should be able to update next action, milestone, and summary quickly.
+
+### Principle 7: polished interaction
+Transitions, loading states, empty states, and feedback should feel smooth and intentional.
 
 ## Page map
 
@@ -251,6 +287,8 @@ The following are read-only in the Cockpit UI in MVP:
 - read-only fields from source systems should be visibly distinct
 - linked external-system fields should have open-link affordances
 - status fields should use consistent badges/colors
+- whitespace and layout should support a premium, uncluttered feel
+- avoid heavy gridlines and overly boxed enterprise styling
 
 ## MVP status visualization
 
@@ -266,23 +304,6 @@ Use consistent badge styles for:
 - amber = in progress / watch
 - red = blocked / critical if introduced later
 - gray = not started / unknown / not applicable
-
-## UX behavior principles
-
-### Principle 1: summary first
-Show essential status and next-step information before deeper detail.
-
-### Principle 2: cross-system clarity
-If a field is sourced from Salesforce or the BVA app, make that visible in the UI.
-
-### Principle 3: link out, do not duplicate
-If deep work belongs elsewhere, provide a clear link instead of rebuilding the whole tool.
-
-### Principle 4: low-friction updates
-The engagement owner should be able to update next action, milestone, and summary quickly.
-
-### Principle 5: role usefulness over data exhaust
-Prefer screens that help people act, not screens that merely expose every field.
 
 ## Suggested MVP components
 
